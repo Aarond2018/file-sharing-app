@@ -42,8 +42,8 @@ export default async function handler(req, res) {
 			
 			response = await cloudinary.uploader.upload(dataURI, {
 				folder: "file-sharing-app",
-				filename_override: file.originalname,
-				resource_type: "auto"
+				resource_type: "auto",
+				context:`filename=${file.originalname}`
 			});
 		} catch (error) {
 			res.status(400).json(error);
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
-			response = await cloudinary.api.resource(req.query.id, {image_metadata: true});
+			response = await cloudinary.search.expression(`public_id=${req.query.id}`).with_field("context").execute()
 		} catch (error) {
 			res.status(400).json(error);
 			return;
