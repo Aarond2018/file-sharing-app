@@ -28,14 +28,18 @@ export default function FileDownload() {
 			<div className={styles.box}>
 				<h2>Your file is Ready</h2>
 				{fileResponse && fileResponse.length !== 0 ? (
-					<a href={fileResponse.secure_url.replace(
+					<>
+						<h4>{fileResponse.context.filename}</h4>
+						<a href={fileResponse.secure_url.replace(
 							"/upload/",
 							`/upload/fl_attachment:${fileResponse.context.filename
 								.split(".")[0]
 								}/`)}
-					>
+						>
 						Click to download
 					</a>
+					</>
+					
 				) : <p>{axiosCallStatus || "No file found"}</p>}
 			</div>
 		</div>
